@@ -1,3 +1,7 @@
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
+import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import { useState, useEffect } from "react";
 import {
   Search,
@@ -11,6 +15,7 @@ import "./App.css";
 
 function App() {
 
+  const [page, setPage] = useState("home");
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [search, setSearch] = useState("");
@@ -73,15 +78,15 @@ const [chatMessages, setChatMessages] = useState([
   }
 
   else if (msg.includes("headphone")) {
-    reply = "Wireless Bluetooth Headphones are available for ₹1,499.";
+    reply = "Wireless Bluetooth Headphones are available for AED 57.71.";
   }
 
   else if (msg.includes("watch")) {
-    reply = "Smart Watch Series 5 is available for ₹2,199.";
+    reply = "Smart Watch Series 5 is available for AED 84.66.";
   }
 
   else if (msg.includes("shoe")) {
-    reply = "Premium Running Shoes are available for ₹1,899.";
+    reply = "Premium Running Shoes are available for AED 73.11.";
   }
 
   else if (msg.includes("electronics")) {
@@ -189,8 +194,98 @@ const [chatMessages, setChatMessages] = useState([
     0
   );
 
+
+      if (page === "about") {
   return (
     <div className="app">
+      <nav className="navbar">
+        
+        <h1
+          className="logo"
+          onClick={() => setPage("home")}
+        >
+          ShopSphere
+        </h1>
+      </nav>
+
+      <About />
+
+      <footer>
+        <h2>ShopSphere</h2>
+        <p>Smart shopping made simple.</p>
+      </footer>
+    </div>
+  );
+}
+
+if (page === "contact") {
+  return (
+    <div className="app">
+      <nav className="navbar">
+        <h1
+          className="logo"
+          onClick={() => setPage("home")}
+        >
+          ShopSphere
+        </h1>
+      </nav>
+
+      <Contact />
+
+      <footer>
+        <h2>ShopSphere</h2>
+        <p>Smart shopping made simple.</p>
+      </footer>
+    </div>
+  );
+}
+
+if (page === "privacy") {
+  return (
+    <div className="app">
+      <nav className="navbar">
+        <h1
+          className="logo"
+          onClick={() => setPage("home")}
+        >
+          ShopSphere
+        </h1>
+      </nav>
+
+      <Privacy />
+
+      <footer>
+        <h2>ShopSphere</h2>
+        <p>Smart shopping made simple.</p>
+      </footer>
+    </div>
+  );
+}
+
+if (page === "affiliate") {
+  return (
+    <div className="app">
+      <nav className="navbar">
+        <h1
+          className="logo"
+          onClick={() => setPage("home")}
+        >
+          ShopSphere
+        </h1>
+      </nav>
+
+      <AffiliateDisclosure />
+
+      <footer>
+        <h2>ShopSphere</h2>
+        <p>Smart shopping made simple.</p>
+      </footer>
+    </div>
+  );
+}
+return (
+<div className="app">
+
       <div className="chatbot">
 
       {chatOpen && (
@@ -339,7 +434,7 @@ const [chatMessages, setChatMessages] = useState([
         <div>
           🚚
           <strong>Free Delivery</strong>
-          <span>On orders above ₹999</span>
+          <span>On orders above AED 38.47</span>
         </div>
 
         <div>
@@ -398,10 +493,7 @@ const [chatMessages, setChatMessages] = useState([
                 </p>
 
                 <strong>
-                  ₹
-                  {Number(
-                    product.price || 0
-                  ).toLocaleString("en-IN")}
+                 AED {(Number(product.price || 0) * 0.0385).toFixed(2)}
                 </strong>
 
                 <button
@@ -456,11 +548,8 @@ const [chatMessages, setChatMessages] = useState([
                 <h3>{item.name}</h3>
 
                 <p>
-                  ₹
-                  {Number(
-                    item.price || 0
-                  ).toLocaleString("en-IN")}
-                </p>
+    AED {(Number(item.price || 0) * 0.0385).toFixed(2)}
+   </p> 
 
                 <div className="quantity">
 
@@ -502,9 +591,8 @@ const [chatMessages, setChatMessages] = useState([
           ))}
 
           <h2>
-            Total: ₹
-            {total.toLocaleString("en-IN")}
-          </h2>
+  Total: AED {(total * 0.0385).toFixed(2)}
+</h2>
 
         </section>
 
@@ -512,17 +600,39 @@ const [chatMessages, setChatMessages] = useState([
 
       <footer>
 
-        <h2>ShopSphere</h2>
+  <div>
+    <h2>ShopSphere</h2>
 
-        <p>
-          Smart shopping made simple.
-        </p>
+    <p>
+      Smart shopping made simple.
+    </p>
+  </div>
 
-        <p>
-          ©️ 2026 ShopSphere
-        </p>
+  <div className="footer-links">
 
-      </footer>
+    <button onClick={() => setPage("about")}>
+      About Us
+    </button>
+
+    <button onClick={() => setPage("contact")}>
+      Contact Us
+    </button>
+
+    <button onClick={() => setPage("privacy")}>
+      Privacy Policy
+    </button>
+
+    <button onClick={() => setPage("affiliate")}>
+      Amazon Affiliate Disclosure
+    </button>
+
+  </div>
+
+  <p>
+    ©️ 2026 ShopSphere
+  </p>
+
+</footer>
 
     </div>
   );
