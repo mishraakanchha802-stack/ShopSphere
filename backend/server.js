@@ -1,0 +1,76 @@
+const express = require("express");
+const cors = require("cors");
+const { createClient } = require("@supabase/supabase-js");
+require("dotenv").config();
+
+const app = express();
+
+const PORT = process.env.PORT || 5000;
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
+
+app.use(cors());
+app.use(express.json());
+
+// Test route
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "ShopSphere backend is running!",
+  });
+});
+
+app.get("/api/products", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error("Products error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch products",
+      error: error.message,
+    });
+  }
+  app.get("/api/health", async (req, res) => {
+  try {
+    const { error } = await supabase
+      .from("products")
+      .select("id")
+      .limit(1);
+
+    if (error) {
+      throw error;
+    }
+
+    res.json({
+      success: true,
+      message: "ShopSphere backend and database are connected!",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Database connection failed",
+      error: error.message,
+    });
+  }
+});
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`ShopSphere backend running on http://localhost:${PORT}`);
+});
