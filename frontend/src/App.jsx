@@ -25,7 +25,7 @@ const [chatMessages, setChatMessages] = useState([
 ]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch("https://shopsphere-backend-ox4e.onrender.com/api/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
